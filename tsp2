@@ -1,0 +1,39 @@
+#!/usr/bin/python3
+
+import sys
+
+permutation = []
+numJobs = 0
+numMachines = 0
+initData = []
+
+
+def read():
+    global permutation
+    del permutation[:]
+    permutation = list(map(int, sys.stdin.readline().strip().split(' ')))
+
+
+def write():
+    global permutation
+    print(' '.join(str(e) for e in permutation))
+
+
+def init(filename):
+    global initData
+
+    file = open(filename, 'r')
+    d = file.read().split()
+    initData.append(d[0])
+    file.close()
+
+def main(argv):
+    init(argv[1])
+    while True:
+        read()
+        write()
+    pass
+
+
+if __name__ == "__main__":
+    main(sys.argv)
