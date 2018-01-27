@@ -9,9 +9,7 @@ initData = []
 S = []
 AN =[]
 Ins = []
-P = []
 A = []
-B = []
 
 
 def score(p):
@@ -23,7 +21,7 @@ def score(p):
     global numMachines
 
     res = [0] * numMachines
-    for i in range(len(p)):
+    for i in range(numJobs):
         res[0] += initData[0][p[i]]
         for j in range(1, numMachines):
             res[j] = max(res[j], res[j - 1]) + initData[j][p[i]]
@@ -59,9 +57,7 @@ def main(argv):
     global S
     global AN
     global Ins
-    global P
     global A
-    global B
 
 
     init(argv[1])
@@ -72,22 +68,25 @@ def main(argv):
             S[j][0] += initData[i][j]
     AN = [0]*(numMachines)
     S= sorted(S)
-
     for i in S:
         Ins.append(i[1])
-    for i in Ins:
-        A.append(i)
-        B.insert(0,i)
-        if score(A) < score(B):
-            P = A
-        else:
-            P = B
+
+    for i in range(200):
+        A = Ins
+        r1 = random.randrange(0,numJobs)
+        r2 = random.randrange(0,numJobs)
+        temp = A[r1]
+        A[r1]=A[r2]
+        A[r2]= temp
+        if score(A) < score(Ins):
+            Ins = A
+
     ans = ""
-    for i in P:
+    for i in Ins:
         ans += str(i) + " "
     ans = ans[:-1]
     print(ans)
-#    print(score(P))
+    #print(score(Ins))
 
 
 

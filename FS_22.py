@@ -11,6 +11,21 @@ AN =[]
 Ins = []
 
 
+def score(p):
+    """
+    Calculates the schedule length (the value that is minimized) for permutation p.
+    """
+    global initData
+    global numJobs
+    global numMachines
+
+    res = [0] * numMachines
+    for i in range(numJobs):
+        res[0] += initData[0][p[i]]
+        for j in range(1, numMachines):
+            res[j] = max(res[j], res[j - 1]) + initData[j][p[i]]
+    return res[-1]
+
 def init(filename):
     """
     Read data describing number of machines, jobs and processing times.
@@ -53,16 +68,13 @@ def main(argv):
     for i in S:
         Ins.append(i[1])
 
-    for j in Ins:
-        perw = 0
-        for i in range(numMachines):
-                AN[i] += (perw+initData[i][j])
-                perw = AN[i]
     ans = ""
     for i in Ins:
         ans += str(i) + " "
     ans = ans[:-1]
     print(ans)
+    #print(score(Ins))
+
 
 
 if __name__ == "__main__":
